@@ -20,7 +20,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.Wool;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.*;
@@ -150,7 +149,7 @@ public class AdvancedPortalsCommand implements CommandExecutor, TabCompleter {
                         // listen to when its placed.
                         // Also do this for other blocks such as gateways and end portals just in case
                         // they want it.
-                        ItemStack portalBlock = new Wool(DyeColor.PURPLE).toItemStack(1);
+                        ItemStack portalBlock = new ItemStack(Material.PURPLE_WOOL, 1);
                         ItemMeta blockName = portalBlock.getItemMeta();
                         blockName.setDisplayName("\u00A75Portal Block Placer");
                         blockName.setLore(Arrays.asList("\u00A7rThis wool is made of a magical substance",
@@ -166,7 +165,7 @@ public class AdvancedPortalsCommand implements CommandExecutor, TabCompleter {
                         // listen to when its placed.
                         // Also do this for other blocks such as gateways and end portals just in case
                         // they want it.
-                        portalBlock = new Wool(DyeColor.BLACK).toItemStack(1);
+                        portalBlock = new ItemStack(Material.BLACK_WOOL, 1);
                         blockName = portalBlock.getItemMeta();
                         blockName.setDisplayName("\u00A78End Portal Block Placer");
                         blockName.setLore(Arrays.asList("\u00A7rThis wool is made of a magical substance",
@@ -181,7 +180,7 @@ public class AdvancedPortalsCommand implements CommandExecutor, TabCompleter {
                         // listen to when its placed.
                         // Also do this for other blocks such as gateways and end portals just in case
                         // they want it.
-                        portalBlock = new Wool(DyeColor.BLACK).toItemStack(1);
+                        portalBlock = new ItemStack(Material.BLACK_WOOL, 1);
                         blockName = portalBlock.getItemMeta();
                         blockName.setDisplayName("\u00A78Gateway Block Placer");
                         blockName.setLore(Arrays.asList("\u00A7rThis wool is made of a magical substance",
