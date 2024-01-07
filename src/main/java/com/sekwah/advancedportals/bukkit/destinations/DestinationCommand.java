@@ -51,11 +51,28 @@ public class DestinationCommand implements CommandExecutor, TabCompleter {
                     sender.sendMessage(PluginMessages.customPrefixFail + " You do not have permission to create destinations!");
                 }
                 break;
-            case "remove":
-                ConfigAccessor portalConfig = new ConfigAccessor(plugin, "destinations.yml");
+            case "move":
                 if (sender.hasPermission("advancedportals.desti")) {
                     if (args.length > 1) {
-                        String posX = portalConfig.getConfig().getString(args[1] + ".pos.X");
+                        String posX = config.getConfig().getString(args[1] + ".pos.X");
+                        if (posX != null) {
+                            Player player = (Player) sender;
+                            Destination.move(player.getLocation(), args[1]);
+                            sender.sendMessage(PluginMessages.customPrefixFail + " The destination \u00A7e" + args[1] + "\u00A7c has been moved!");
+                        } else {
+                            sender.sendMessage(PluginMessages.customPrefixFail + " No destination by that name exists.");
+                        }
+                    } else {
+                        sender.sendMessage(PluginMessages.customPrefixFail + " You need to state the name of the destination you wish to move.");
+                    }
+                } else {
+                    sender.sendMessage(PluginMessages.customPrefixFail + " You do not have permission to move destinations!");
+                }
+                break;
+            case "remove":
+                if (sender.hasPermission("advancedportals.desti")) {
+                    if (args.length > 1) {
+                        String posX = config.getConfig().getString(args[1] + ".pos.X");
                         if (posX != null) {
                             Destination.remove(args[1]);
                             sender.sendMessage(PluginMessages.customPrefixFail + " The destination \u00A7e" + args[1] + "\u00A7c has been removed!");
@@ -116,7 +133,9 @@ public class DestinationCommand implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command cmd, String command, String[] args) {
         LinkedList<String> autoComplete = new LinkedList<>();
         ConfigAccessor config = new ConfigAccessor(plugin, "destinations.yml");
-        if(args.length > 1 && args[0].equalsIgnoreCase("warp")){
+        if(args.length > 1 && (args[0].equalsIgnoreCase("warp")
+                || args[0].equalsIgnoreCase("remove")
+                || args[0].equalsIgnoreCase("move"))) {
             for (String string : config.getConfig().getKeys(false)) {
                 if (sender.hasPermission("advancedportals.desti.*") | sender.hasPermission("advancedportals.desti." + string))
                     autoComplete.add(string);
@@ -124,7 +143,7 @@ public class DestinationCommand implements CommandExecutor, TabCompleter {
         }
         if (args.length == 1) {
             if (sender.hasPermission("advancedportals.desti") | sender.hasPermission("advancedportals.createportal")) {
-                autoComplete.addAll(Arrays.asList("create", "remove", "help"));
+                autoComplete.addAll(Arrays.asList("create", "remove", "move", "help"));
             }
             autoComplete.add("warp");
         }
