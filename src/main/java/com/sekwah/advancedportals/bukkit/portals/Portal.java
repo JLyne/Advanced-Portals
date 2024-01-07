@@ -347,13 +347,44 @@ public class Portal {
 
     public static void redefine(Location pos1, Location pos2, String name) {
 
-        portalData.getConfig().set(name + ".pos1.X", pos1.getX());
-        portalData.getConfig().set(name + ".pos1.Y", pos1.getY());
-        portalData.getConfig().set(name + ".pos1.Z", pos1.getZ());
+        int LowX = 0;
+        int LowY = 0;
+        int LowZ = 0;
 
-        portalData.getConfig().set(name + ".pos2.X", pos2.getX());
-        portalData.getConfig().set(name + ".pos2.Y", pos2.getY());
-        portalData.getConfig().set(name + ".pos2.Z", pos2.getZ());
+        int HighX = 0;
+        int HighY = 0;
+        int HighZ = 0;
+
+        if (pos1.getX() > pos2.getX()) {
+            LowX = (int) pos2.getX();
+            HighX = (int) pos1.getX();
+        } else {
+            LowX = (int) pos1.getX();
+            HighX = (int) pos2.getX();
+        }
+        if (pos1.getY() > pos2.getY()) {
+            LowY = (int) pos2.getY();
+            HighY = (int) pos1.getY();
+        } else {
+            LowY = (int) pos1.getY();
+            HighY = (int) pos2.getY();
+        }
+        if (pos1.getZ() > pos2.getZ()) {
+            LowZ = (int) pos2.getZ();
+            HighZ = (int) pos1.getZ();
+        } else {
+            LowZ = (int) pos1.getZ();
+            HighZ = (int) pos2.getZ();
+        }
+
+        portalData.getConfig().set(name + ".world", pos1.getWorld().getName());
+        portalData.getConfig().set(name + ".pos1.X", HighX);
+        portalData.getConfig().set(name + ".pos1.Y", HighY);
+        portalData.getConfig().set(name + ".pos1.Z", HighZ);
+
+        portalData.getConfig().set(name + ".pos2.X", LowX);
+        portalData.getConfig().set(name + ".pos2.Y", LowY);
+        portalData.getConfig().set(name + ".pos2.Z", LowZ);
 
         portalData.saveConfig();
 

@@ -396,6 +396,84 @@ public class AdvancedPortalsCommand implements CommandExecutor, TabCompleter {
                             }
                         }
                         break;
+                    case "redefine":
+                        if (args.length > 1) {
+                            String posX = portalConfig.getConfig().getString(args[1] + ".pos1.X");
+                            if (posX != null) {
+
+                                if (player.hasMetadata("Pos1World") && player.hasMetadata("Pos2World")
+                                    && player.getMetadata("Pos1World").get(0).asString()
+                                            .equals(player.getMetadata("Pos2World").get(0).asString())
+                                            && player.getMetadata("Pos1World").get(0).asString()
+                                            .equals(player.getLocation().getWorld().getName())) {
+
+                                    Location pos1, pos2;
+                                    if (plugin.isWorldEditActive()) {
+                                        pos1 = WorldEditIntegration.getPos1(player);
+                                        pos2 = WorldEditIntegration.getPos2(player);
+                                    } else {
+                                        World world = Bukkit
+                                                .getWorld(player.getMetadata("Pos1World").get(0).asString());
+                                        pos1 = new Location(world, player.getMetadata("Pos1X").get(0).asInt(),
+                                                            player.getMetadata("Pos1Y").get(0).asInt(),
+                                                            player.getMetadata("Pos1Z").get(0).asInt());
+                                        pos2 = new Location(world, player.getMetadata("Pos2X").get(0).asInt(),
+                                                            player.getMetadata("Pos2Y").get(0).asInt(),
+                                                            player.getMetadata("Pos2Z").get(0).asInt());
+                                    }
+
+                                    Portal.redefine(pos1, pos2, args[1]);
+                                    sender.sendMessage(PluginMessages.customPrefixFail + " The portal \u00A7e" + args[1]
+                                                               + "\u00A7c has been redefined!");
+                                } else {
+                                    player.sendMessage(PluginMessages.customPrefixFail + " No regions selected!");
+                                }
+                            } else {
+                                sender.sendMessage(PluginMessages.customPrefixFail + " No portal by that name exists!");
+                            }
+                        } else {
+                            if (player.getMetadata("selectedPortal").size() != 0) {
+                                String portalName = player.getMetadata("selectedPortal").get(0).asString();
+                                String posX = portalConfig.getConfig().getString(portalName + ".pos1.X");
+                                if (posX != null) {
+                                    if (player.hasMetadata("Pos1World") && player.hasMetadata("Pos2World")
+                                        && player.getMetadata("Pos1World").get(0).asString()
+                                                .equals(player.getMetadata("Pos2World").get(0).asString())
+                                                && player.getMetadata("Pos1World").get(0).asString()
+                                                .equals(player.getLocation().getWorld().getName())) {
+
+                                        Location pos1, pos2;
+                                        if (plugin.isWorldEditActive()) {
+                                            pos1 = WorldEditIntegration.getPos1(player);
+                                            pos2 = WorldEditIntegration.getPos2(player);
+                                        } else {
+                                            World world = Bukkit
+                                                    .getWorld(player.getMetadata("Pos1World").get(0).asString());
+                                            pos1 = new Location(world, player.getMetadata("Pos1X").get(0).asInt(),
+                                                                player.getMetadata("Pos1Y").get(0).asInt(),
+                                                                player.getMetadata("Pos1Z").get(0).asInt());
+                                            pos2 = new Location(world, player.getMetadata("Pos2X").get(0).asInt(),
+                                                                player.getMetadata("Pos2Y").get(0).asInt(),
+                                                                player.getMetadata("Pos2Z").get(0).asInt());
+                                        }
+
+                                        Portal.redefine(pos1, pos2, args[1]);
+                                        sender.sendMessage(PluginMessages.customPrefixFail + " The portal \u00A7e" + args[1]
+                                                                   + "\u00A7c has been redefined!");
+                                    } else {
+                                        player.sendMessage(PluginMessages.customPrefixFail + " No regions selected!");
+                                    }
+                                } else {
+                                    sender.sendMessage(PluginMessages.customPrefixFail
+                                            + " The portal you had selected no longer seems to exist!");
+                                    player.removeMetadata("selectedPortal", plugin);
+                                }
+                            } else {
+                                sender.sendMessage(
+                                        PluginMessages.customPrefixFail + " No portal has been defined or selected!");
+                            }
+                        }
+                        break;
                     case "help":
                         helpCommand(sender, command, args);
                         break;
@@ -953,7 +1031,7 @@ public class AdvancedPortalsCommand implements CommandExecutor, TabCompleter {
         if (sender.hasPermission("advancedportals.createportal")) {
             if (args.length == 1 || (args.length == 2 && args[0].equalsIgnoreCase("help"))) {
                 autoComplete.addAll(Arrays.asList("create", "list", "portalblock", "select", "unselect", "command",
-                        "show", "gatewayblock", "endportalblock", "variables", "disablebeacon", "remove", "rename",
+                        "show", "gatewayblock", "endportalblock", "variables", "disablebeacon", "remove", "redefine", "rename",
                         "help", "bukkitpage", "helppage"));
                 if (Bukkit.getPluginManager().isPluginEnabled("WorldEdit")) {
                     autoComplete.add("we-selection");
@@ -1069,6 +1147,7 @@ public class AdvancedPortalsCommand implements CommandExecutor, TabCompleter {
         else if (args.length == 2 &&
                 (args[0].equalsIgnoreCase("remove")
                 || args[0].equalsIgnoreCase("disablebeacon")
+                || args[0].equalsIgnoreCase("redefine")
                 || args[0].equalsIgnoreCase("we-selection"))) {
             for (AdvancedPortal portal : Portal.portals) {
                 autoComplete.add(portal.getName());
