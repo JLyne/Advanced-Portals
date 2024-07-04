@@ -55,8 +55,8 @@ group = 'com.sekwah.advancedportals'
 
 description = ""
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 21
+targetCompatibility = 21
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
