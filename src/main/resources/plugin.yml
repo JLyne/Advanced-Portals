@@ -3,7 +3,7 @@ name: AdvancedPortals
 version: 1.0.0
 author: sekwah41
 description: An advanced portals plugin for bukkit.
-api-version: 1.13
+api-version: '1.21'
 
 softdepend:
   - WorldEdit
