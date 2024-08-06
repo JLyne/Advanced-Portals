@@ -11,7 +11,7 @@ softdepend:
 commands:
   advancedportals:
     description: The main command for the advanced portals
-    aliases: [portals, aportals, portal, ap]
+    aliases: [portal]
     usage: /<command>
     permission: advancedportals.portalcommand
   destination:
