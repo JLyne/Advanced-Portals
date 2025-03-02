@@ -36,7 +36,6 @@ public class Listeners implements Listener {
     public static String HAS_WARPED = "hasWarped";
     public static String LAVA_WARPED = "lavaWarped";
 
-    @SuppressWarnings("deprecation")
     public Listeners(AdvancedPortalsPlugin plugin) {
         this.plugin = plugin;
 
@@ -58,7 +57,6 @@ public class Listeners implements Listener {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new CooldownDataRemovalTask(), period, period);
     }
 
-    @SuppressWarnings("deprecation")
     public static void reloadValues(AdvancedPortalsPlugin plugin) {
 
         ConfigAccessor config = new ConfigAccessor(plugin, "config.yml");

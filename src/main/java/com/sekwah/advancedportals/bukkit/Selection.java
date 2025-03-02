@@ -12,7 +12,6 @@ public class Selection {
     private static Material blockType = Material.RED_STAINED_GLASS;
     private static int timeout = 10;
 
-    @SuppressWarnings("deprecation")
     public static void loadData(AdvancedPortalsPlugin plugin) {
         ConfigAccessor config = new ConfigAccessor(plugin, "config.yml");
 
@@ -28,7 +27,6 @@ public class Selection {
         }
     }
 
-    @SuppressWarnings("deprecation")
     public static void show(final Player player, final AdvancedPortalsPlugin plugin, String portalName) {
 
         int LowX = 0;
