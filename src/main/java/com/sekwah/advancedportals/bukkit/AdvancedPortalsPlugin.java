@@ -6,7 +6,6 @@ import com.sekwah.advancedportals.bukkit.destinations.Destination;
 import com.sekwah.advancedportals.bukkit.destinations.DestinationCommand;
 import com.sekwah.advancedportals.bukkit.effects.WarpEffects;
 import com.sekwah.advancedportals.bukkit.listeners.*;
-import com.sekwah.advancedportals.bukkit.metrics.Metrics;
 import com.sekwah.advancedportals.bukkit.portals.Portal;
 import com.sekwah.advancedportals.bungee.BungeeMessages;
 import org.bukkit.Bukkit;
@@ -36,9 +35,6 @@ public class AdvancedPortalsPlugin extends JavaPlugin {
     public void onEnable() {
 
         saveDefaultConfig();
-
-        /*Metrics metrics = */
-        new Metrics(this, 4814);
 
         ConfigAccessor config = new ConfigAccessor(this, "config.yml");
 
