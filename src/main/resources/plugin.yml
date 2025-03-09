@@ -18,7 +18,6 @@ commands:
     description: Can be used to access portal destinations.
     aliases: [desti]
     usage: /<command>
-    permission: advancedportals.desti
 permissions:
   advancedportals.*:
     description: Gives access to all commands
